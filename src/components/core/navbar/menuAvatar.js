@@ -2,6 +2,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { useState, useRef, useEffect } from "react"
+import { signOut } from "next-auth/react"
 
 export const MenuAvatar = () => {
     const [isOpen, setIsOpen] = useState(false)
@@ -78,7 +79,10 @@ export const MenuAvatar = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link href="/logout" onClick={handleClose} >
+                        <Link href="/" onClick={()=> {
+                            signOut()
+                            handleClose()
+                        }} >
                             Logout
                         </Link>
                     </li>

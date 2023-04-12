@@ -1,9 +1,15 @@
 import Link from "next/link"
 import { ContainerUi } from "@/components"
 import { MenuAvatar } from './menuAvatar'
+import { User } from "@prisma/client"
 
-export const Navbar = () => {
-    const isLogged = false
+interface NavbarProps {
+    currentUser?: User | null
+}
+
+export const Navbar = ({ currentUser }: NavbarProps) => {
+    const isLogged = currentUser !== null
+
     return (
         <nav className="fixed w-full z-10 bg-white dark:bg-black">
             <ContainerUi className="flex flex-wrap items-center justify-between p-4">
