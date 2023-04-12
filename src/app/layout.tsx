@@ -1,6 +1,7 @@
 import './globals.css'
 
 import { quicksandFont } from '@/lib/font';
+import { Navbar } from '@/components';
 
 export const metadata = {
   title: 'Idea Sort',
@@ -14,7 +15,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={quicksandFont.className}>
-      <body>{children}</body>
+      <body>
+        <Navbar />
+        {children}
+      </body>
     </html>
   )
 }
