@@ -16,8 +16,8 @@ export const Navbar = () => {
                             <MenuAvatar />
                         ) : (
                             <div className="btn-group">
-                                <label htmlFor="sign-up-modal" className="btn btn-sm md:btn-md">Sign Up</label>
-                                <label htmlFor="login-modal" className="btn btn-sm md:btn-md btn-primary">Login</label>
+                                <label id="23" htmlFor="sign-up-modal" className="btn btn-sm md:btn-md">Sign Up</label>
+                                <label id="32" htmlFor="login-modal" className="btn btn-sm md:btn-md btn-primary">Login</label>
                             </div>
                         )
                     }

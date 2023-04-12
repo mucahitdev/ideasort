@@ -12,7 +12,7 @@ export const SignUpModal = () => {
                         <li className="step cursor-pointer">Register</li>
                     </ul>
 
-                    <h3 className="text-lg font-bold">Sign Up</h3>
+                    <h3 className="text-lg font-bold text-center">Sign Up</h3>
                     <Steps />
                 </label>
             </label>

@@ -1,12 +1,14 @@
 'use client';
 import React, { useEffect, useState } from 'react'
+import { RegisterForm } from './register-form'
 
 export const Steps = () => {
-    const [stepNum, setStepNum] = useState(0)
+    const [stepNum, setStepNum] = useState<number>(0)
+    const isFirstStep: boolean = stepNum == 0
 
     useEffect(() => {
-        const steps = document.querySelectorAll('.step')
-        steps.forEach((step, index) => {
+        const steps: NodeListOf<Element> = document.querySelectorAll('.step')
+        steps.forEach((step: Element, index: number) => {
             step.addEventListener('click', () => {
                 setStepNum(index)
             })
@@ -14,30 +16,31 @@ export const Steps = () => {
     }, [])
 
     useEffect(() => {
-        const steps = document.querySelectorAll('.step')
-        steps.forEach((step, index) => {
+        const steps: NodeListOf<Element> = document.querySelectorAll('.step')
+        steps.forEach((step: Element, index: number) => {
             if (index == stepNum) {
                 step.classList.add('step-primary')
             } else {
-                if (index !== 0)
-                step.classList.remove('step-primary')
+                if (index !== 0) {
+                    step.classList.remove('step-primary')
+                }
             }
         })
     }, [stepNum])
 
-  return (
-    <div>
-        {
-            stepNum == 0 ? (
-                <div className="w-full">
-                    Info
-                </div>
-            ) : (
-                <div className="w-full">
-                    Register
-                </div>
-            )
-        }
-    </div>   
-  )
+    return (
+        <div>
+            {
+                isFirstStep ? (
+                    <div className="w-full">
+                        You can log in with your email address or social media addresses (Github, Google).
+                    </div>
+                ) : (
+                    <div className="w-full">
+                        <RegisterForm />
+                    </div>
+                )
+            }
+        </div>
+    )
 }

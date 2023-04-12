@@ -1,4 +1,4 @@
-import React from 'react'
+import { LoginForm } from "./login-form"
 
 export const LoginModal = () => {
     return (
@@ -7,8 +7,8 @@ export const LoginModal = () => {
             <label htmlFor="login-modal" className="modal cursor-pointer">
                 <label className="modal-box relative" htmlFor="">
                     <label htmlFor="login-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-                    <h3 className="text-lg font-bold">Login</h3>
-                    <p className="py-4">You ve been selected for a chance to get one year of subscription to use Wikipedia for free!</p>
+                    <h3 className="text-lg font-bold text-center">Login</h3>
+                    <LoginForm />
                 </label>
             </label>
         </>
