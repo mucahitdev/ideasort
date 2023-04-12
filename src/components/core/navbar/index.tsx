@@ -13,12 +13,12 @@ export const Navbar = () => {
                     </div>
                     {
                         isLogged ? (
-                            <div className="btn-group">
-                                <button className="btn btn-sm md:btn-md">Sign In</button>
-                                <button className="btn btn-sm md:btn-md btn-primary">Sign Up</button>
-                            </div>
-                        ) : (
                             <MenuAvatar />
+                        ) : (
+                            <div className="btn-group">
+                                <label htmlFor="sign-up-modal" className="btn btn-sm md:btn-md">Sign Up</label>
+                                <label htmlFor="login-modal" className="btn btn-sm md:btn-md btn-primary">Login</label>
+                            </div>
                         )
                     }
                 </div>
