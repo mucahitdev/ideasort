@@ -1,26 +1,85 @@
 'use client';
-import React from 'react'
+import { useState } from "react";
+import { useFormik } from "formik";
+import { useRouter } from "next/navigation";
+import { validationSchemaLogin } from "@/libs/yup"
+import { signIn } from 'next-auth/react'
+import toast from 'react-hot-toast';
+
+
 
 export const LoginForm = () => {
+    const [loading, setLoading] = useState(false);
+    const router = useRouter()
+
+    const { handleSubmit, handleChange, handleBlur, values, errors, touched, isValid, dirty } =
+        useFormik({
+            initialValues: {
+                email: "",
+                password: "",
+            },
+            validationSchema: validationSchemaLogin,
+            onSubmit: (values) => {
+                setLoading(true)
+                signIn('credentials', {
+                    redirect: false,
+                    email: values.email,
+                    password: values.password,
+                }).then((callback) => {
+
+                    if (callback?.ok) {
+                        setLoading(false)
+                        close()
+                        toast.success('Logged in successfully')
+                        router.refresh()
+                    }
+
+                    if (callback?.error) {
+                        setLoading(false)
+                        toast.error(callback?.error)
+                    }
+
+
+                }).catch((err) => {
+                    console.log(err)
+                }).finally(() => {
+                    setLoading(false)
+                })
+            },
+        });
     function handleSignUp() {
         const loginModal = document.getElementById('23')
         loginModal?.click()
     }
 
+    function close() {
+        const loginModal = document.getElementById('32')
+        loginModal?.click()
+    }
+
     return (
-        <div className="form-control w-full">
+        <form className="form-control w-full" onSubmit={handleSubmit}>
             <label className="label">
                 <span className="label-text">What is your email address?</span>
+                {errors.email && touched.email && (
+                    <p className="text-red-500 label-text-alt">{errors.email}</p>
+                )}
             </label>
-            <input type="text" placeholder="Email" className="input input-bordered w-full" autoComplete='Email' />
+            <input name="email" type="text" placeholder="Email" className="input input-bordered w-full" autoComplete='Email' onChange={handleChange} value={values.email} onBlur={handleBlur} />
 
             <label className="label">
                 <span className="label-text">What is your password?</span>
+                {errors.password && touched.password && (
+                    <p className="text-red-500 label-text-alt">{errors.password}</p>
+                )}
             </label>
-            <input type="password" placeholder="Password" className="input input-bordered w-full" autoComplete='Password' />
+            <input name="password" type="password" placeholder="Password" className="input input-bordered w-full" autoComplete='Password' onChange={handleChange} value={values.password} onBlur={handleBlur} />
 
             <div className="mt-4">
-                <button className="btn bg-slate-200 text-black w-full">Login</button>
+                <button disabled={!(isValid && dirty)} type="submit"
+                    className={`btn text-black w-full ${loading && 'loading'} ${isValid && dirty ? 'bg-slate-50' : 'btn-disabled cursor-not-allowed bg-slate-400'}`}>
+                    Login
+                </button>
             </div>
 
             <div className="divider">OR</div>
@@ -40,6 +99,6 @@ export const LoginForm = () => {
                     <label onClick={handleSignUp} htmlFor="login-modal" className="text-blue-500 ml-2 cursor-pointer">Sign up</label>
                 </div>
             </div>
-        </div>
+        </form>
     )
 }

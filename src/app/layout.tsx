@@ -1,6 +1,6 @@
 import './globals.css'
 
-import { quicksandFont } from '@/lib/font';
+import { quicksandFont } from '@/libs/font';
 import { Navbar, Wrapper } from '@/components';
 
 export const metadata = {
