@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
+  emailVerified DateTime?
+  name      String?
+  image     String?
+  hashedPassword String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+
+  account Account[]
+  fromIdeas Idea[] @relation("fromIdeas")
+  toIdeas Idea[] @relation("toIdeas")
+}
+
+model Account {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  type      String 
+  provider  String
+  providerAccountId String
+  refreshToken String? @db.String
+  accessToken String? @db.String
+  accessTokenExpires DateTime?
+  tokenType String? 
+  scope String?
+  idToken String? @db.String
+  sessionState String?
+
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id] , onDelete: Cascade)
+  @@unique([provider, providerAccountId]) 
+}
+
+model Idea {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  tags      Tag[]
+  private   Boolean? @default(false)
+  complated Boolean? @default(false)
+  likeCount Int? @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  authorId String? @db.ObjectId
+  receiverId String? @db.ObjectId
+  likedUserIds String[] @db.String
+
+  author   User?   @relation("fromIdeas", fields: [authorId], references: [id])
+  receiver User?   @relation("toIdeas", fields: [receiverId], references: [id])
+
+}
+
+model Tag {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  ideaId    String? @db.ObjectId
+  idea      Idea?   @relation(fields: [ideaId], references: [id])
+}
