@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { validationSchemaLogin } from "@/libs/yup"
 import { signIn } from 'next-auth/react'
 import toast from 'react-hot-toast';
+import { Icon } from '@iconify/react';
 
 
 
@@ -85,13 +86,19 @@ export const LoginForm = () => {
             </form>
             <div className="divider">OR</div>
 
-            <div className='flex space-x-3'>
+            <div className='space-y-2 md:space-y-0 md:flex md:space-x-3'>
                 <div className="w-full">
-                    <button className="btn btn-primary w-full">Continue with Google</button>
+                    <button className="btn btn-primary w-full space-x-2" onClick={() => signIn('google')}>
+                        <Icon icon="logos:google-icon" />
+                        <span className="text-xs">Continue with Google</span>
+                    </button>
                 </div>
                 <div className="w-full">
                     <button onClick={() => signIn('github')}
-                        className="btn btn-primary w-full">Continue with Github</button>
+                        className="btn btn-primary w-full space-x-2">
+                        <Icon icon="logos:github-icon" />
+                        <span className="text-xs">Continue with Github</span>
+                    </button>
                 </div>
             </div>
 

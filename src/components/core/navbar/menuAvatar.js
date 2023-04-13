@@ -29,7 +29,7 @@ export const MenuAvatar = ({ currentUser }) => {
         }
     }, [avatarlist])
 
-    const userImage = currentUser ? currentUser.image : null 
+    const userImage = currentUser ? currentUser.image : null
 
     return (
         <div className="flex-none">
@@ -55,13 +55,13 @@ export const MenuAvatar = ({ currentUser }) => {
                 {
                     userImage ? (
                         <label tabIndex={2} className="btn btn-ghost btn-circle avatar" onClick={handleOpen}>
-                            <div className="w-10 rounded-full" >
+                            <div className="w-8 md:w-10 rounded-full" >
                                 <Image src={userImage} alt="user" width={40} height={40} />
                             </div>
                         </label>
                     ) : (
                         <div tabIndex={2} className="btn btn-ghost btn-circle avatar placeholder" onClick={handleOpen}>
-                            <div className="bg-neutral-focus text-neutral-content rounded-full w-10">
+                            <div className="bg-neutral-focus text-neutral-content rounded-full w-8 md:w-10">
                                 <span>MX</span>
                             </div>
                         </div>
@@ -74,17 +74,16 @@ export const MenuAvatar = ({ currentUser }) => {
                         </Link>
                     </li>
                     <li>
-                        <Link href="/settings" onClick={handleClose} >
-                            Settings
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href="/" onClick={()=> {
-                            signOut()
+                        <button href="/" onClick={() => {
                             handleClose()
+                            signOut(
+                                {
+                                    callbackUrl: `${window.location.origin}/`
+                                }
+                            )
                         }} >
                             Logout
-                        </Link>
+                        </button>
                     </li>
                 </ul>
             </div>
