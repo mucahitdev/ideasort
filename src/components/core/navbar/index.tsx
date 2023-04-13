@@ -1,10 +1,10 @@
 import Link from "next/link"
 import { ContainerUi } from "@/components"
 import { MenuAvatar } from './menuAvatar'
-import { User } from "@prisma/client"
+import { SafeUser } from "@/types"
 
 interface NavbarProps {
-    currentUser?: User | null
+    currentUser?: SafeUser | null
 }
 
 export const Navbar = ({ currentUser }: NavbarProps) => {
@@ -19,7 +19,7 @@ export const Navbar = ({ currentUser }: NavbarProps) => {
                     </div>
                     {
                         isLogged ? (
-                            <MenuAvatar />
+                            <MenuAvatar currentUser={currentUser} />
                         ) : (
                             <div className="btn-group">
                                 <label id="23" htmlFor="sign-up-modal" className="btn btn-sm md:btn-md">Sign Up</label>

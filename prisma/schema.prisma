@@ -11,64 +11,62 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  email     String   @unique
-  emailVerified DateTime?
-  name      String?
-  image     String?
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  email          String    @unique
+  emailVerified  DateTime?
+  name           String?
+  image          String?
   hashedPassword String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
-
-  account Account[]
-  fromIdeas Idea[] @relation("fromIdeas")
-  toIdeas Idea[] @relation("toIdeas")
+  accounts  Account[]
+  fromIdeas Idea[]    @relation("fromIdeas")
+  toIdeas   Idea[]    @relation("toIdeas")
 }
 
 model Account {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String   @db.ObjectId
-  type      String 
-  provider  String
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
   providerAccountId String
-  refreshToken String? @db.String
-  accessToken String? @db.String
-  accessTokenExpires DateTime?
-  tokenType String? 
-  scope String?
-  idToken String? @db.String
-  sessionState String?
-
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user User @relation(fields: [userId], references: [id] , onDelete: Cascade)
-  @@unique([provider, providerAccountId]) 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
 }
 
 model Idea {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  title     String
-  tags      Tag[]
-  private   Boolean? @default(false)
-  complated Boolean? @default(false)
-  likeCount Int? @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  authorId String? @db.ObjectId
-  receiverId String? @db.ObjectId
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  title        String
+  tags         Tag[]
+  private      Boolean? @default(false)
+  complated    Boolean? @default(false)
+  likeCount    Int?     @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  authorId     String?  @db.ObjectId
+  receiverId   String?  @db.ObjectId
   likedUserIds String[] @db.String
 
-  author   User?   @relation("fromIdeas", fields: [authorId], references: [id])
-  receiver User?   @relation("toIdeas", fields: [receiverId], references: [id])
-
+  author   User? @relation("fromIdeas", fields: [authorId], references: [id])
+  receiver User? @relation("toIdeas", fields: [receiverId], references: [id])
 }
 
 model Tag {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  ideaId    String? @db.ObjectId
-  idea      Idea?   @relation(fields: [ideaId], references: [id])
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  name   String
+  ideaId String? @db.ObjectId
+  idea   Idea?   @relation(fields: [ideaId], references: [id])
 }

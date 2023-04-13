@@ -4,8 +4,7 @@ import Image from "next/image"
 import { useState, useRef, useEffect } from "react"
 import { signOut } from "next-auth/react"
 
-
-export const MenuAvatar = () => {
+export const MenuAvatar = ({ currentUser }) => {
     const [isOpen, setIsOpen] = useState(false)
 
     const avatarlist = useRef(null)
@@ -30,7 +29,7 @@ export const MenuAvatar = () => {
         }
     }, [avatarlist])
 
-    const userImage = false
+    const userImage = currentUser ? currentUser.image : null 
 
     return (
         <div className="flex-none">
